@@ -36,7 +36,7 @@ namespace Zip.EmiCalc.Api.Controllers
             if (!ModelState.IsValid)
             {
                 var paymentChargesResult = this._premiumCalculator.CalculateChargesWithDates(paymentOrderRequest.OrderAmount, paymentOrderRequest.InstallmentCount, paymentOrderRequest.FrequencyOfDaysCount);
-                PremiumPaymentPlan premiumPlanResponse = new PremiumPaymentPlan()
+                PremiumPaymentPlan premiumPlanResponse = new()
                 {
                     PremiumDatesWithCharges = paymentChargesResult
                 };
