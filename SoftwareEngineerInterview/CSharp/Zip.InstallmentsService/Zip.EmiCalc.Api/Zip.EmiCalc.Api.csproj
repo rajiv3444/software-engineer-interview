@@ -25,4 +25,8 @@
     <ProjectReference Include="..\Zip.EmiCalc.DataAccessRepository\Zip.EmiCalc.DataAccessRepository.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Middlewares\" />
+  </ItemGroup>
+
 </Project>
