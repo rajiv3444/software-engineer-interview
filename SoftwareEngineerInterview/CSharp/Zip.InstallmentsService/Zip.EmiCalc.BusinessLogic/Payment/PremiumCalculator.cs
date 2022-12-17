@@ -2,7 +2,13 @@
 {
     public class PremiumCalculator : IPremiumCalculator
     {
-        
+        /// <summary>
+        /// This method will calculate installment instalment charges with its payment dates based on privided input data like number of installment, frequency
+        /// </summary>
+        /// <param name="totalAmount">this is total amont for which order is placed</param>
+        /// <param name="numberOfInstallment">number of installment specified </param>
+        /// <param name="frequencyDays">frequency in terms of number of days specified for installmet</param>
+        /// <returns></returns>
         public Dictionary<DateTime, decimal> CalculateChargesWithDates(decimal totalAmount, int numberOfInstallment, int frequencyDays)
         {
             var chargesWithDates = new Dictionary<DateTime, decimal>();
@@ -29,6 +35,12 @@
             return chargesWithDates;
         }
 
+        /// <summary>
+        /// This method gets the per unit charges for one installment based on the number of installment the user have speviied
+        /// </summary>
+        /// <param name="totalAmount">this is he total amount of order placed</param>
+        /// <param name="numberOfInstallment">number of installment specified </param>
+        /// <returns></returns>
         public decimal CalculatePremiumAmount(decimal totalAmount, int numberOfInstallment)
         {
             try

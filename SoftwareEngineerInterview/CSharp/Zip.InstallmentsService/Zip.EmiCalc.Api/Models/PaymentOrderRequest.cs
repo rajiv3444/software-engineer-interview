@@ -4,11 +4,9 @@ namespace Zip.EmiCalc.Api.Models
 {
     public class PaymentOrderRequest
     {
-        [Required]
+        // Fluent validation is used for model validation
         public decimal OrderAmount { get; set; }
-        [Required]
         public int InstallmentCount { get; set; }
-        [Required]
         public int FrequencyOfDaysCount { get; set; }
     }
 }

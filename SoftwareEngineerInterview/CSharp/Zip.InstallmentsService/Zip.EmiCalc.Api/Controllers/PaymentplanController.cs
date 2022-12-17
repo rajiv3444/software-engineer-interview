@@ -12,7 +12,6 @@ namespace Zip.EmiCalc.Api.Controllers
         private readonly IPremiumCalculator _premiumCalculator;
         public PaymentplanController(IPremiumCalculator premiumCalculator)
         {
-            // inject dependences
             this._premiumCalculator = premiumCalculator;
         }
 
@@ -22,18 +21,13 @@ namespace Zip.EmiCalc.Api.Controllers
         /// </summary>
         /// <param name="paymentOrderRequest">Properties like 'Order Amount', 'installment Amount','Frequency in Days' </param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentNullException">There must be valid data provided to consume this API</exception>
         [HttpGet]
         [Route("payment-plan")]
         public IActionResult PaymentPlanWithCharges([FromBody] PaymentOrderRequest paymentOrderRequest)
         {
-            if (paymentOrderRequest is null)
-            {
-                throw new ArgumentNullException(nameof(paymentOrderRequest));
-            }
-
-            // model validation
-            if (!ModelState.IsValid)
+            // model validation - using Fluent validation
+            if (paymentOrderRequest is not null && !ModelState.IsValid)
             {
                 var paymentChargesResult = this._premiumCalculator.CalculateChargesWithDates(paymentOrderRequest.OrderAmount, paymentOrderRequest.InstallmentCount, paymentOrderRequest.FrequencyOfDaysCount);
                 PremiumPaymentPlan premiumPlanResponse = new()
@@ -42,8 +36,8 @@ namespace Zip.EmiCalc.Api.Controllers
                 };
                 return Ok(premiumPlanResponse);
             }
-
-            return BadRequest("Invalid input Data");
+            
+            return BadRequest();
         }
     }
 }
