@@ -10,9 +10,12 @@ namespace Zip.EmiCalc.Api.Controllers
     public class PaymentplanController : ControllerBase
     {
         private readonly IPremiumCalculator _premiumCalculator;
-        public PaymentplanController(IPremiumCalculator premiumCalculator)
+        private readonly ILogger _logger;
+
+        public PaymentplanController(IPremiumCalculator premiumCalculator, ILogger logger)
         {
             this._premiumCalculator = premiumCalculator;
+            this._logger = logger;
         }
 
 
@@ -26,16 +29,25 @@ namespace Zip.EmiCalc.Api.Controllers
         [Route("payment-plan")]
         public IActionResult PaymentPlanWithCharges([FromBody] PaymentOrderRequest paymentOrderRequest)
         {
-            // model validation - using Fluent validation
-            if (paymentOrderRequest is not null && !ModelState.IsValid)
+            try
             {
-                var paymentChargesResult = this._premiumCalculator.CalculateChargesWithDates(paymentOrderRequest.OrderAmount, paymentOrderRequest.InstallmentCount, paymentOrderRequest.FrequencyOfDaysCount);
-                PremiumPaymentPlan premiumPlanResponse = new()
+                // model validation - using Fluent validation
+                if (paymentOrderRequest is not null && !ModelState.IsValid)
                 {
-                    PremiumDatesWithCharges = paymentChargesResult
-                };
-                return Ok(premiumPlanResponse);
+                    var paymentChargesResult = this._premiumCalculator.CalculateChargesWithDates(paymentOrderRequest.OrderAmount, paymentOrderRequest.InstallmentCount, paymentOrderRequest.FrequencyOfDaysCount);
+                    PremiumPaymentPlan premiumPlanResponse = new()
+                    {
+                        PremiumDatesWithCharges = paymentChargesResult
+                    };
+                    return Ok(premiumPlanResponse);
+                }
             }
+            catch (Exception ex)
+            {
+
+                this._logger.LogError("Error occured while calculating payment plan");
+            }
+            
             
             return BadRequest();
         }

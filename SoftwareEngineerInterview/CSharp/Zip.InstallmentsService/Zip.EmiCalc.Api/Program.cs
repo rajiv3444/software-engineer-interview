@@ -6,8 +6,11 @@ using Zip.EmiCalc.BusinessLogic.Payment;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Register logger here
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
 
+// Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
