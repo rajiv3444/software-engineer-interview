@@ -17,10 +17,15 @@ namespace Zip.EmiCalc.Api.Controllers
         }
 
 
-        // GET: api/<Paymentplan>
+        /// <summary>
+        /// This API will respond you with payment plan (dates and charges) based on your choosen installment count and the frequency
+        /// </summary>
+        /// <param name="paymentOrderRequest">Properties like 'Order Amount', 'installment Amount','Frequency in Days' </param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         [HttpGet]
-        [Route("paymentPlan-withCharges")]
-        public IActionResult PaymentPlanWithCharges(PaymentOrderRequest paymentOrderRequest)
+        [Route("payment-plan")]
+        public IActionResult PaymentPlanWithCharges([FromBody] PaymentOrderRequest paymentOrderRequest)
         {
             if (paymentOrderRequest is null)
             {
@@ -40,25 +45,5 @@ namespace Zip.EmiCalc.Api.Controllers
 
             return BadRequest("Invalid input Data");
         }
-
-        /*
-        // GET: api/<Paymentplan>
-        [HttpGet]
-        public async Task<IActionResult> Get()
-        {
-            var orderAmount = 100;
-            var installmentCount = 4;
-            // validation
-            if (orderAmount <= 0)
-            {
-                return BadRequest();
-            }
-            var res = this._premiumCalculator.CalculatePremiumAmount(orderAmount, installmentCount);
-
-            return Ok(res);
-        }
-        */
-
-
     }
 }
