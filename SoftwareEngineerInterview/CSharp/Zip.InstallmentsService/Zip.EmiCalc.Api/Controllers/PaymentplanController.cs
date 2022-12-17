@@ -16,26 +16,29 @@ namespace Zip.EmiCalc.Api.Controllers
             this._premiumCalculator = premiumCalculator;
         }
 
-       
+
         // GET: api/<Paymentplan>
         [HttpGet]
         [Route("paymentPlan-withCharges")]
-        public async Task<IActionResult>PaymentPlan(decimal orderAmount, int installmentCount, int daysCountfrequency)
+        public IActionResult PaymentPlanWithCharges(PaymentOrderRequest paymentOrderRequest)
         {
-
-            // validation
-            if (orderAmount <=0 || installmentCount <= 0 || daysCountfrequency <= 0)
+            if (paymentOrderRequest is null)
             {
-                return BadRequest("Invalid input data");
+                throw new ArgumentNullException(nameof(paymentOrderRequest));
             }
 
-            var paymentChargesResult = this._premiumCalculator.CalculateChargesWithDates(orderAmount, installmentCount, daysCountfrequency);
-            //PremiumPaymentPlan premiumPlanResponse = new PremiumPaymentPlan()
-            //{
-            //    PremiumDatesWithCharges = paymentChargesResult
-            //};
+            // model validation
+            if (!ModelState.IsValid)
+            {
+                var paymentChargesResult = this._premiumCalculator.CalculateChargesWithDates(paymentOrderRequest.OrderAmount, paymentOrderRequest.InstallmentCount, paymentOrderRequest.FrequencyOfDaysCount);
+                PremiumPaymentPlan premiumPlanResponse = new PremiumPaymentPlan()
+                {
+                    PremiumDatesWithCharges = paymentChargesResult
+                };
+                return Ok(premiumPlanResponse);
+            }
 
-            return Ok(paymentChargesResult);
+            return BadRequest("Invalid input Data");
         }
 
         /*
