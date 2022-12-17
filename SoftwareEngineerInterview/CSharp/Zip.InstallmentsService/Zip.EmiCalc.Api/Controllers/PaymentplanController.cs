@@ -16,6 +16,29 @@ namespace Zip.EmiCalc.Api.Controllers
             this._premiumCalculator = premiumCalculator;
         }
 
+       
+        // GET: api/<Paymentplan>
+        [HttpGet]
+        [Route("paymentPlan-withCharges")]
+        public async Task<IActionResult>PaymentPlan(decimal orderAmount, int installmentCount, int daysCountfrequency)
+        {
+
+            // validation
+            if (orderAmount <=0 || installmentCount <= 0 || daysCountfrequency <= 0)
+            {
+                return BadRequest("Invalid input data");
+            }
+
+            var paymentChargesResult = this._premiumCalculator.CalculateChargesWithDates(orderAmount, installmentCount, daysCountfrequency);
+            //PremiumPaymentPlan premiumPlanResponse = new PremiumPaymentPlan()
+            //{
+            //    PremiumDatesWithCharges = paymentChargesResult
+            //};
+
+            return Ok(paymentChargesResult);
+        }
+
+        /*
         // GET: api/<Paymentplan>
         [HttpGet]
         public async Task<IActionResult> Get()
@@ -31,29 +54,8 @@ namespace Zip.EmiCalc.Api.Controllers
 
             return Ok(res);
         }
+        */
 
-        // GET: api/<Paymentplan>
-        [HttpGet]
-        [Route("paymentPlan-withCharges")]
-        public async Task<IActionResult>PaymentPlan()
-        {
-            var orderAmount = 100;
-            var installmentCount = 4;
-            var frequency = 14;
-            // validation
-            if (orderAmount <=0 || installmentCount <= 0 || frequency <= 0)
-            {
-                return BadRequest("Invalid input data");
-            }
-
-            var paymentChargesResult = this._premiumCalculator.CalculateChargesWithDates(orderAmount, installmentCount, frequency);
-            //PremiumPaymentPlan premiumPlanResponse = new PremiumPaymentPlan()
-            //{
-            //    PremiumDatesWithCharges = paymentChargesResult
-            //};
-
-            return Ok(paymentChargesResult);
-        }
 
     }
 }
