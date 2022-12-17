@@ -1,3 +1,5 @@
+using Zip.EmiCalc.BusinessLogic.Payment;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +8,10 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Dependency Injection - START
+builder.Services.AddScoped<IPremiumCalculator, PremiumCalculator>();
+// // Dependency Injection - END
 
 var app = builder.Build();
 
@@ -21,5 +27,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+
 
 app.Run();
