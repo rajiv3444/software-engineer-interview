@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Zip.EmiCalc.Api.Models;
+//using Zip.EmiCalc.Api.Models;
 using Zip.EmiCalc.BusinessLogic.Payment;
+using Zip.EmiCalc.RequestResponseModels.ResponseModels;
 
 
 namespace Zip.EmiCalc.Api.Controllers

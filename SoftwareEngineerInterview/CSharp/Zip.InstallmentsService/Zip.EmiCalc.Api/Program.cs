@@ -1,8 +1,9 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
-using Zip.EmiCalc.Api.Models;
+//using Zip.EmiCalc.Api.Models;
 using Zip.EmiCalc.Api.ModelValidators;
 using Zip.EmiCalc.BusinessLogic.Payment;
+using Zip.EmiCalc.RequestResponseModels.RequestModels;
 
 var builder = WebApplication.CreateBuilder(args);
 

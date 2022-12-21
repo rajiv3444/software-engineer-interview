@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
-using Zip.EmiCalc.Api.Models;
+//using Zip.EmiCalc.Api.Models;
+using Zip.EmiCalc.RequestResponseModels.RequestModels;
 
 namespace Zip.EmiCalc.Api.ModelValidators
 {

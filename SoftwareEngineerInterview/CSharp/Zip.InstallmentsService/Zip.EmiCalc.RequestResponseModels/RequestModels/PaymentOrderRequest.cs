@@ -1,6 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Zip.EmiCalc.Api.Models
+namespace Zip.EmiCalc.RequestResponseModels.RequestModels
 {
     public class PaymentOrderRequest
     {

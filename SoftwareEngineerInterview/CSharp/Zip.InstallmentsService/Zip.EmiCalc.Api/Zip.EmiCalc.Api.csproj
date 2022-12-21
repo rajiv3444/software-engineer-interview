@@ -23,6 +23,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Zip.EmiCalc.BusinessLogic\Zip.EmiCalc.BusinessLogic.csproj" />
     <ProjectReference Include="..\Zip.EmiCalc.DataAccessRepository\Zip.EmiCalc.DataAccessRepository.csproj" />
+    <ProjectReference Include="..\Zip.EmiCalc.RequestResponseModels\Zip.EmiCalc.RequestResponseModels.csproj" />
   </ItemGroup>
 
   <ItemGroup>
