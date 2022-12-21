@@ -32,3 +32,15 @@ The API is calculating the installment for payment plan (the charge amount with 
 - [@Rajiv Bhardwaj](https://github.com/rajiv3444)
 - [@Altimetric / QadPay](https://github.com/quadpay)
 
+
+
+## 🚀 About Me
+I'm a full stack web developer with technologies stacks of:
+ - .Net
+ - Angular
+ - Azure
+ - MS SQL
+ - Javascript
+ - HTML
+ - CSS
+
