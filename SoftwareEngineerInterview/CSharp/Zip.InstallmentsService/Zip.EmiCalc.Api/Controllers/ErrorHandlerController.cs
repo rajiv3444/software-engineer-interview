@@ -8,24 +8,23 @@ namespace Zip.EmiCalc.Api.Controllers
     [ApiController]
     public class ErrorHandlerController : ControllerBase
     {
-        [Route("/error-development")]
-        public IActionResult HandleErrorDevelopment(
-    [FromServices] IHostEnvironment hostEnvironment)
-        {
-            if (!hostEnvironment.IsDevelopment())
-            {
-                return NotFound();
-            }
+        //[Route("/error-development")]
+        //public IActionResult HandleErrorDevelopment([FromServices] IHostEnvironment hostEnvironment)
+        //{
+        //    if (!hostEnvironment.IsDevelopment())
+        //    {
+        //        return NotFound();
+        //    }
 
-            var exceptionHandlerFeature = HttpContext.Features.Get<IExceptionHandlerFeature>()!;
+        //    var exceptionHandlerFeature = HttpContext.Features.Get<IExceptionHandlerFeature>()!;
 
-            return Problem(
-                detail: exceptionHandlerFeature.Error.StackTrace,
-                title: exceptionHandlerFeature.Error.Message);
-        }
+        //    return Problem(
+        //        detail: exceptionHandlerFeature.Error.StackTrace,
+        //        title: exceptionHandlerFeature.Error.Message);
+        //}
 
-        [Route("/error")]
-        public IActionResult HandleError() =>
-            Problem();
+        //[Route("/error")]
+        //public IActionResult HandleError() =>
+        //    Problem();
     }
 }

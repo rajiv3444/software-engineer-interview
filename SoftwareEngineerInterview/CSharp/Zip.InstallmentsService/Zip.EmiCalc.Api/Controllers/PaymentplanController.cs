@@ -27,14 +27,14 @@ namespace Zip.EmiCalc.Api.Controllers
         /// <exception cref="ArgumentNullException">There must be valid data provided to consume this API</exception>
         [HttpGet]
         [Route("payment-plan")]
-        public IActionResult PaymentPlanWithCharges([FromBody] PaymentOrderRequest paymentOrderRequest)
+        public IActionResult PaymentPlanWithCharges(decimal orderAmount, int installmentCount, int frequencyOfDaysCount)
         {
             try
             {
                 // model validation - using Fluent validation
-                if (paymentOrderRequest is not null && !ModelState.IsValid)
+                if (ModelState.IsValid && isDataValid(orderAmount, installmentCount, frequencyOfDaysCount))
                 {
-                    var paymentChargesResult = this._premiumCalculator.CalculateChargesWithDates(paymentOrderRequest.OrderAmount, paymentOrderRequest.InstallmentCount, paymentOrderRequest.FrequencyOfDaysCount);
+                    var paymentChargesResult = this._premiumCalculator.CalculateChargesWithDates(orderAmount, installmentCount, frequencyOfDaysCount);
                     PremiumPaymentPlan premiumPlanResponse = new()
                     {
                         PremiumDatesWithCharges = paymentChargesResult
@@ -45,11 +45,16 @@ namespace Zip.EmiCalc.Api.Controllers
             catch (Exception ex)
             {
 
-                this._logger.LogError("Error occured while calculating payment plan");
+                this._logger.LogError("Error occured while calculating payment plan. Exception: ", ex);
             }
             
             
             return BadRequest();
+        }
+
+        private bool isDataValid(decimal orderAmount, int installmentCount, int frequencyOfDaysCount)
+        {
+            return orderAmount > 0 && installmentCount > 0 && frequencyOfDaysCount > 0;
         }
     }
 }

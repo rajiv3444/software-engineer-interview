@@ -7,8 +7,13 @@ using Zip.EmiCalc.BusinessLogic.Payment;
 var builder = WebApplication.CreateBuilder(args);
 
 // Register logger here
-builder.Logging.ClearProviders();
-builder.Logging.AddConsole();
+//builder.Logging.ClearProviders();
+//builder.Logging.AddConsole();
+
+var serviceProvider = builder.Services.BuildServiceProvider();
+var logger = serviceProvider.GetService<ILogger<PaymentOrderRequest>>();
+builder.Services.AddSingleton(typeof(ILogger), logger);
+
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -28,13 +33,13 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/error-development");
+    //app.UseExceptionHandler("/error-development");
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 else
 {
-    app.UseExceptionHandler("/error");
+    //app.UseExceptionHandler("/error");
 }
 
 app.UseHttpsRedirection();
