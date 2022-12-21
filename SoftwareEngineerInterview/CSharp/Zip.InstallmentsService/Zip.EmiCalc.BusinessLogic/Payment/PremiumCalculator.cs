@@ -1,7 +1,15 @@
-﻿namespace Zip.EmiCalc.BusinessLogic.Payment
+﻿using Microsoft.Extensions.Logging;
+
+namespace Zip.EmiCalc.BusinessLogic.Payment
 {
     public class PremiumCalculator : IPremiumCalculator
     {
+        private readonly ILogger _logger;
+        private readonly string _bal = "BAL: ";
+        public PremiumCalculator(ILogger logger)
+        {
+            this._logger = logger;
+        }
         /// <summary>
         /// This method will calculate installment instalment charges with its payment dates based on privided input data like number of installment, frequency
         /// </summary>
@@ -29,6 +37,7 @@
             }
             catch (Exception)
             {
+                _logger.LogError($"{_bal} Error occured while calculating the charge with payment dates");
                 throw;
             }
 
@@ -49,6 +58,7 @@
             }
             catch (Exception)
             {
+                _logger.LogError($"{_bal} Error occured while calculating the premium amount");
                 throw;
             }
         }

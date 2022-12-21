@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Net;
 //using Zip.EmiCalc.Api.Models;
 using Zip.EmiCalc.BusinessLogic.Payment;
 using Zip.EmiCalc.RequestResponseModels.ResponseModels;
@@ -45,8 +46,14 @@ namespace Zip.EmiCalc.Api.Controllers
             }
             catch (Exception ex)
             {
-
-                this._logger.LogError("Error occured while calculating payment plan. Exception: ", ex);
+                var problemDetails = new ProblemDetails
+                {
+                    Status = (int)HttpStatusCode.BadRequest,
+                    Title = ex.Message,
+                    Detail = ex.Message
+                };
+                this._logger.LogError("Exception occured while calculating payment plan. Exception: ", ex);
+                return BadRequest(problemDetails);
             }
             
             

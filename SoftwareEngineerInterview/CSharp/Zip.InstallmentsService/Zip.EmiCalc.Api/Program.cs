@@ -1,5 +1,6 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Zip.EmiCalc.Api.Middlewares;
 //using Zip.EmiCalc.Api.Models;
 using Zip.EmiCalc.Api.ModelValidators;
 using Zip.EmiCalc.BusinessLogic.Payment;
@@ -31,24 +32,18 @@ builder.Services.AddScoped<IValidator<PaymentOrderRequest>, PaymentOrderRequestV
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// customer middleware to handle exceptions
+app.ConfigureZipCoExceptionHandler(logger);
+
 if (app.Environment.IsDevelopment())
 {
-    //app.UseExceptionHandler("/error-development");
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-else
-{
-    //app.UseExceptionHandler("/error");
-}
-
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
 app.MapControllers();
-
-
 
 app.Run();
