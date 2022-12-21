@@ -27,6 +27,45 @@ The API is calculating the installment for payment plan (the charge amount with 
 
 
 
+## Run Locally
+
+Clone the project
+
+```bash
+  git clone https://github.com/rajiv3444/software-engineer-interview
+```
+
+Go to the project directory
+
+```bash
+  cd your-project-directory-you-cloned
+  cd \software-engineer-interview\SoftwareEngineerInterview\CSharp\Zip.InstallmentsService
+```
+
+Launc the project
+ - Open visual Studio (2022)
+ - Alternatevely you can use Visual Stdio Code
+ - Open the file Zip.InstallmentsService.sln
+
+
+Build the project
+ - Go to 'Build' >> 'Build Solution' on Visual Studio
+ - alternately you can use the command
+ ```bash
+ dotnet build
+ ```
+
+Run the API
+- Press **F5** while Visual Stdio is in Open
+- alternately you can use the command
+ ```bash
+ dotnet run
+ ```
+ 
+
+
+
+
 ## Authors
 
 - [@Rajiv Bhardwaj](https://github.com/rajiv3444)
