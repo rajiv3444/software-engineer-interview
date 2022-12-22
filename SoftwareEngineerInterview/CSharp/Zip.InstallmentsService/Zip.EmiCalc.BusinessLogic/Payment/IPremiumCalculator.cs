@@ -10,6 +10,8 @@ namespace Zip.EmiCalc.BusinessLogic.Payment
     {
         public decimal CalculatePremiumAmount(decimal totalAmount, int numberOfInstallment);
         public Dictionary<DateTime, decimal> CalculateChargesWithDates(decimal totalAmount, int numberOfInstallment, int frequencyDays);
+
+        public void SavePaymentPlan(decimal totalAmount, int numberOfInstallment, int frequencyDays);
         
     }
 }

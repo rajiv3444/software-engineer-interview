@@ -2,6 +2,7 @@
 using System.Net;
 //using Zip.EmiCalc.Api.Models;
 using Zip.EmiCalc.BusinessLogic.Payment;
+using Zip.EmiCalc.DataAccessRepository.EFModels;
 using Zip.EmiCalc.RequestResponseModels.ResponseModels;
 
 
@@ -17,7 +18,7 @@ namespace Zip.EmiCalc.Api.Controllers
         public PaymentplanController(IPremiumCalculator premiumCalculator, ILogger logger)
         {
             this._premiumCalculator = premiumCalculator;
-            this._logger = logger;
+            this._logger = logger;            
         }
 
 
@@ -37,6 +38,7 @@ namespace Zip.EmiCalc.Api.Controllers
                 if (ModelState.IsValid && isDataValid(orderAmount, installmentCount, frequencyOfDaysCount))
                 {
                     var paymentChargesResult = this._premiumCalculator.CalculateChargesWithDates(orderAmount, installmentCount, frequencyOfDaysCount);
+                    this._premiumCalculator.SavePaymentPlan(orderAmount, installmentCount, frequencyOfDaysCount);
                     PremiumPaymentPlan premiumPlanResponse = new()
                     {
                         PremiumDatesWithCharges = paymentChargesResult

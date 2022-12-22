@@ -1,14 +1,18 @@
 ﻿using Microsoft.Extensions.Logging;
+using Zip.EmiCalc.DataAccessRepository.EFModels;
+using Zip.EmiCalc.DataAccessRepository.Repositories;
 
 namespace Zip.EmiCalc.BusinessLogic.Payment
 {
     public class PremiumCalculator : IPremiumCalculator
     {
         private readonly ILogger _logger;
-        private readonly string _bal = "BAL: ";
-        public PremiumCalculator(ILogger logger)
+        private readonly IPaymentPlanRepository _paymentPlanRepository;
+        public PremiumCalculator(ILogger logger, IPaymentPlanRepository paymentPlanRepository)
         {
             this._logger = logger;
+            this._paymentPlanRepository = paymentPlanRepository;
+            
         }
         /// <summary>
         /// This method will calculate installment instalment charges with its payment dates based on privided input data like number of installment, frequency
@@ -35,9 +39,9 @@ namespace Zip.EmiCalc.BusinessLogic.Payment
                     orderPlecementDate = orderPlecementDate.AddDays(frequencyDays);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                _logger.LogError($"{_bal} Error occured while calculating the charge with payment dates");
+                _logger.LogError("BAL: Error occured while calculating the charge with payment dates", ex);
                 throw;
             }
 
@@ -56,9 +60,29 @@ namespace Zip.EmiCalc.BusinessLogic.Payment
             {
                 return totalAmount / numberOfInstallment;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                _logger.LogError($"{_bal} Error occured while calculating the premium amount");
+                _logger.LogError("BAL: Error occured while calculating the premium amount", ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The method will save payment plan (with its dates and charges) to database
+        /// </summary>
+        /// <param name="totalAmount">this is total amont for which order is placed</param>
+        /// <param name="numberOfInstallment">number of installment specified </param>
+        /// <param name="frequencyDays">frequency in terms of number of days specified for installmet</param>
+        /// <exception cref="NotImplementedException"></exception>
+        public void SavePaymentPlan(decimal totalAmount, int numberOfInstallment, int frequencyDays)
+        {
+            try
+            {
+                this._paymentPlanRepository.PersistPaymentPlan(totalAmount, numberOfInstallment, frequencyDays);    
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("BAL: Error occured while saving paymetn plan to database", ex);
                 throw;
             }
         }
