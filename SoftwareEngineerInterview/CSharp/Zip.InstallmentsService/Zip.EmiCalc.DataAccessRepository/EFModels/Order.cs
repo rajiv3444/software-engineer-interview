@@ -7,10 +7,17 @@ using System.Collections.Generic;
 
 namespace Zip.EmiCalc.DataAccessRepository.EFModels
 {
-    public partial class Orderr
+    public partial class Order
     {
-        public string OrderId { get; set; }
+        public Order()
+        {
+            PaymentPlan = new HashSet<PaymentPlan>();
+        }
+
+        public Guid OrderId { get; set; }
         public decimal OrderAmount { get; set; }
         public DateTime OrderDate { get; set; }
+
+        public virtual ICollection<PaymentPlan> PaymentPlan { get; set; }
     }
 }

@@ -9,10 +9,12 @@ namespace Zip.EmiCalc.DataAccessRepository.EFModels
 {
     public partial class PaymentPlan
     {
-        public int PlanId { get; set; }
-        public string? OrderRefId { get; set; }
+        public Guid PlanId { get; set; }
+        public Guid OrderRefId { get; set; }
         public decimal PerInstalmentCharge { get; set; }
         public int InstalmentCount { get; set; }
         public int FrequencyInDays { get; set; }
+
+        public virtual Order OrderRef { get; set; }
     }
 }

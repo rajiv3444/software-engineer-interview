@@ -25,11 +25,11 @@ namespace Zip.EmiCalc.DataAccessRepository.Repositories
 
                 try
                 {
-                    var order = new Orderr()
+                    var order = new Order()
                     {
                         OrderAmount = totalAmount,
                         OrderDate = DateTime.Now,
-                        OrderId = Guid.NewGuid().ToString()
+                        OrderId = Guid.NewGuid()
                     };
 
                     this._zipCoContext.Add(order);
@@ -37,6 +37,7 @@ namespace Zip.EmiCalc.DataAccessRepository.Repositories
 
                     var paymentPlan = new PaymentPlan()
                     {
+                        PlanId = Guid.NewGuid(),
                         OrderRefId = order.OrderId,
                         FrequencyInDays = frequencyDays,
                         InstalmentCount = numberOfInstallment,

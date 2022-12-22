@@ -19,7 +19,7 @@ namespace Zip.EmiCalc.DataAccessRepository.EFModels
         {
         }
 
-        public virtual DbSet<Orderr> Orderr { get; set; }
+        public virtual DbSet<Order> Order { get; set; }
         public virtual DbSet<PaymentPlan> PaymentPlan { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -33,15 +33,13 @@ namespace Zip.EmiCalc.DataAccessRepository.EFModels
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Orderr>(entity =>
+            modelBuilder.Entity<Order>(entity =>
             {
-                entity.HasKey(e => e.OrderId);
-
-                entity.ToTable("orderr");
+                entity.ToTable("order");
 
                 entity.Property(e => e.OrderId)
                     .HasColumnName("orderId")
-                    .HasMaxLength(50);
+                    .ValueGeneratedNever();
 
                 entity.Property(e => e.OrderAmount)
                     .HasColumnName("orderAmount")
@@ -50,7 +48,6 @@ namespace Zip.EmiCalc.DataAccessRepository.EFModels
                 entity.Property(e => e.OrderDate)
                     .HasColumnName("orderDate")
                     .HasColumnType("date");
-
             });
 
             modelBuilder.Entity<PaymentPlan>(entity =>
@@ -67,14 +64,17 @@ namespace Zip.EmiCalc.DataAccessRepository.EFModels
 
                 entity.Property(e => e.InstalmentCount).HasColumnName("instalmentCount");
 
-                entity.Property(e => e.OrderRefId)
-                    .IsRequired()
-                    .HasColumnName("orderRefId")
-                    .HasMaxLength(50);
+                entity.Property(e => e.OrderRefId).HasColumnName("orderRefId");
 
                 entity.Property(e => e.PerInstalmentCharge)
                     .HasColumnName("perInstalmentCharge")
                     .HasColumnType("decimal(18, 0)");
+
+                entity.HasOne(d => d.OrderRef)
+                    .WithMany(p => p.PaymentPlan)
+                    .HasForeignKey(d => d.OrderRefId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_paymentPlan_order");
             });
 
             OnModelCreatingPartial(modelBuilder);
