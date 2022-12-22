@@ -45,7 +45,7 @@ Go to the project directory
 Launc the project
  - Open visual Studio (2022)
  - Alternatevely you can use Visual Stdio Code
- - Open the file Zip.InstallmentsService.sln
+ - Open the file Zip.InstallmentsService.sln from the location '~\SoftwareEngineerInterview\CSharp\Zip.InstallmentsService'
 
 
 Build the project
