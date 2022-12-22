@@ -1,7 +1,7 @@
 
 # API: Payment Plan Calculator
 
-The API is calculating the installment for payment plan (the charge amount with its date) for an order amount, with choosen (prferrd) installment count and frequency of days to pay the installment.
+The API is calculating the installment for payment plan (the charge amount with its date) for an order amount, with choosen (selected) installment count and frequency of days to pay the installment. It is also persisting the payment plan in database
 
 
 
